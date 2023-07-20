@@ -25,3 +25,4 @@ jobs:
           otlpEndpoint: ${{ secrets.ENDPOINT }}
           otlpHeaders: "hello=world"
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          otelServiceName: hello-otel
