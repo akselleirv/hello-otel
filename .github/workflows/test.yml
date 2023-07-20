@@ -1,14 +1,23 @@
 name: OpenTelemetry Export Trace
 
 on:
-  workflow_run:
-    workflows: ["PR check"]
-    types: [completed]
+  push:
+    branches: [main]
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Building binary
+      run: |
+        echo "build build"
+        
   otel-export-trace:
+    if: always()
     name: OpenTelemetry Export Trace
     runs-on: ubuntu-latest
+    needs: [build] # must run when all jobs are complete
     steps:
       - name: Export Workflow Trace
         uses: inception-health/otel-export-trace-action@latest
@@ -16,4 +25,3 @@ jobs:
           otlpEndpoint: ${{ secrets.ENDPOINT }}
           otlpHeaders: "hello=world"
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          runId: ${{ github.event.workflow_run.id }}
