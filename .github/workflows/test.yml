@@ -13,16 +13,7 @@ jobs:
       run: |
         echo "build build"
         
-  otel-export-trace:
-    if: always()
-    name: OpenTelemetry Export Trace
-    runs-on: ubuntu-latest
-    needs: [build] # must run when all jobs are complete
-    steps:
-      - name: Export Workflow Trace
-        uses: inception-health/otel-export-trace-action@latest
-        with:
-          otlpEndpoint: ${{ secrets.ENDPOINT }}
-          otlpHeaders: "hello=world"
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          otelServiceName: hello-otel
+    - name: Send data to OTLP backend
+      uses: codeboten/github-action-to-otlp@v1
+      with:
+        endpoint: ${{ secrets.ENDPOINT }}
