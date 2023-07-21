@@ -13,7 +13,10 @@ jobs:
       run: |
         echo "build build"
         
-    - name: Send data to OTLP backend
-      uses: codeboten/github-action-to-otlp@v1
+    - name: Export Workflow Trace
+      uses: inception-health/otel-export-trace-action@latest
       with:
-        endpoint: ${{ secrets.ENDPOINT }}
+        otlpEndpoint: ${{ secrets.ENDPOINT }}
+        otlpHeaders: "hello=world"
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
+        otelServiceName: hello-otel
