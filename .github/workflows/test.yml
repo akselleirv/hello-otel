@@ -1,4 +1,4 @@
-name: OpenTelemetry Export Trace
+name: build
 
 on:
   push:
@@ -13,10 +13,3 @@ jobs:
       run: |
         echo "build build"
         
-    - name: Export Workflow Trace
-      uses: inception-health/otel-export-trace-action@latest
-      with:
-        otlpEndpoint: ${{ secrets.ENDPOINT }}
-        otlpHeaders: "hello=world"
-        githubToken: ${{ secrets.GITHUB_TOKEN }}
-        otelServiceName: hello-otel
